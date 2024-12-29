@@ -1,3 +1,8 @@
+#custome
+.DS_Store
+samples/
+app/
+
 # Logs
 logs
 *.log
