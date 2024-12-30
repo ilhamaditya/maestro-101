@@ -1,0 +1,8 @@
+logging:
+  level: info
+  output: logs/maestro.log
+
+reporting:
+  output: "reports/login-test-report-$(date +'%Y%m%d-%H%M%S').html"
+  format: html      # Desired report format (html in this case)
+  enable: true      # Enable reporting
