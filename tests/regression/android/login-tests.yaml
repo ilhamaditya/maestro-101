@@ -1,3 +1,5 @@
 appId: com.wdiodemoapp
 ---
-- launchApp
+- launchApp:
+    clearState: true
+- tapOn: "Login"  # Menggunakan teks untuk elemen
