@@ -1,0 +1,14 @@
+#contoh test login for ios
+appId: org.reactjs.native.example.wdiodemoapp
+---
+- launchApp:
+    clearState: true
+- tapOn: "Login"  # Menggunakan teks untuk elemen
+- tapOn: "Email"
+- inputText: "admin@mail.co"
+- tapOn: "Password"
+- inputText: "admin@mail.co"
+- tapOn: "button-LOGIN"
+- assertVisible: "Success"
+- assertVisible: "You are logged in!"
+- tapOn: "OK"

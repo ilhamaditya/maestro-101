@@ -1,3 +1,4 @@
+#contoh config file maestro
 logging:
   level: info
   output: logs/maestro.log

@@ -1,0 +1,69 @@
+#contoh Maestro github action
+name: Maestro CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-maestro-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Install Maestro
+      - name: Install Maestro
+        run: |
+          echo "Installing Maestro..."
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          maestro -v
+
+      # Step 3: Download the APK (if stored remotely)
+      # Skip this step if the APK is already in the repository
+      - name: Download APK
+        run: |
+          echo "Downloading APK..."
+          mkdir -p app/android
+          curl -o app/android/android.wdio.native.app.v1.0.8.apk "https://example.com/path-to-your-apk/android.wdio.native.app.v1.0.8.apk"
+
+      # Step 4: Run Maestro Tests
+      - name: Run Maestro Tests
+        run: |
+          echo "Running Maestro Tests..."
+          mkdir -p reports
+          timestamp=$(date +'%Y%m%d-%H%M%S')
+          maestro test --format html --output "reports/login-test-report-${timestamp}.html" tests/regression/android/login-tests.yaml
+
+      # Step 5: Upload Test Reports as Artifacts
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: maestro-reports
+          path: reports/
+
+      # Step 6: (Optional) Send Slack Notification
+      - name: Send Slack Notification
+        if: always() # Ensure this runs even if the test fails
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "text": "Maestro test run completed on branch *${{ github.ref_name }}*.\n\n:page_facing_up: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Reports>",
+              "attachments": [
+                {
+                  "color": "good",
+                  "fields": [
+                    { "title": "Repository", "value": "${{ github.repository }}", "short": true },
+                    { "title": "Branch", "value": "${{ github.ref_name }}", "short": true },
+                    { "title": "Status", "value": "Completed", "short": true }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
