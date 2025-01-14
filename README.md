@@ -4,7 +4,7 @@ apk file : wdio.native.app
 username | password : admin@mail.co
 
 ## 🚀 Youtube Link : [Short Demo](https://youtu.be/aPbKJUou9lI)
-## 🚀 Baca Link : [Short Demo](https://medium.com/@muxsdn/simple-mobile-automation-testing-with-maestro-dd9e2cc02f95)
+## 🚀 Baca Link : [Short Reading](https://medium.com/@muxsdn/simple-mobile-automation-testing-with-maestro-dd9e2cc02f95)
 
 Simulasi Maestro di Android.
 
